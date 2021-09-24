@@ -22,7 +22,7 @@ namespace Data
                 commandText = "USP_ID";
                 parameters = new SqlParameter[1];
                 parameters[0] = new SqlParameter("@IdPedido", SqlDbType.Int);
-                //parameters[0].Value = detallePedido.IdPedido;
+                parameters[0].Value = detallePedido.IdPedido;
                 detallePedidos = new List<DetallePedido>();
 
                 using (SqlDataReader reader = SQLHelper.ExecuteReader(SQLHelper.Connection, commandText, CommandType.StoredProcedure, parameters))
@@ -31,6 +31,7 @@ namespace Data
                     {
                         detallePedidos.Add(new DetallePedido
                         {
+                            IdPedido = reader["idpedido"] != null ? Convert.ToInt32(reader["idpedido"]) : 0,
                             IdProducto = reader["idproducto"] != null ? Convert.ToInt32(reader["idproducto"]) : 0,
                             PrecioUnidad = reader["preciounidad"] != null ? Convert.ToDecimal(reader["preciounidad"]) : 0,
                             Cantidad = reader["cantidad"] != null ? Convert.ToInt32(reader["cantidad"]) : 0,

@@ -49,16 +49,22 @@ namespace Semana5
         private void dgvPedido_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Pedido pedido = null;
-            BDetallePedido bDetallePedido = new BDetallePedido();
+            BDetallePedido bDetallePedido = null;
             try
             {
                 pedido = (Pedido)dgvPedido.SelectedItem;
+                int IdPedido = pedido.IdPedido;
                 bDetallePedido = new BDetallePedido();
-                dgvDetallePedido.ItemsSource = bDetallePedido.GetDetallePedidosPorId(pedido.IdPedido);
+                dgvDetallePedido.ItemsSource = bDetallePedido.GetDetallePedidosPorId(IdPedido);
+                txtTotal.Text = bDetallePedido.GetDetalleTotalPorId(IdPedido).ToString();
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                bDetallePedido = null;
             }
         }
     }
